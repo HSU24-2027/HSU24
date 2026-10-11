@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "HSU Mitarbeiter-App"
+description = "Die mobile Mitarbeiter-App von Hamrah Sprachservice: Home-Ansicht und zentrale wiederverwendbare UI-Bausteine für Mitarbeitende im Minijob. Dieser erste Teststand verwendet klar gekennzeichnete Beispieldaten und noch keine Datenbank."
+version = "1.0.0"
+id = "artifacts/hsu-mitarbeiter-app"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26220
+
+[services.development]
+run = "pnpm --filter @workspace/hsu-mitarbeiter-app run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/hsu-mitarbeiter-app", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/hsu-mitarbeiter-app/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26220"
+BASE_PATH = "/"
